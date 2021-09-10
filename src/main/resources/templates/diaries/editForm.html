@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2 th:text="#{page.addDiary}">일지 등록</h2>
+    </div>
+
+    <form action="diary.html" th:action th:object="${diary}" method="post">
+        <div th:each="diaryContent, itemStat : *{content}">
+            <div>
+                <label for="item" th:text="#{label.diary.item}">종목명</label>
+                <input type="text" id="item" th:field="*{content[__${itemStat.index}__].item}"
+                       class="form-control" placeholder="종목을 입력하세요">
+            </div>
+            <div>
+                <label for="bank" th:text="#{label.diary.bank}">증권사</label>
+                <input type="text" id="bank" th:field="*{content[__${itemStat.index}__].bank}"
+                      class="form-control" placeholder="증권사를 입력하세요">
+            </div>
+            <div>
+                <label for="trade_category" th:text="#{label.diary.trade_category}">매매 구분</label>
+                <input type="text" id="trade_category" th:field="*{content[__${itemStat.index}__].trade_category}"
+                      class="form-control" placeholder="매매 구분을 입력하세요">
+            </div>
+
+            <div>
+                <label for="transaction_price" th:text="#{label.diary.transaction_price}">체결 단가</label>
+                <input type="text" id="transaction_price" th:field="*{content[__${itemStat.index}__].transaction_price}"
+                      class="form-control" placeholder="체결 단가을 입력하세요">
+            </div>
+
+            <div>
+                <label for="transaction_volume" th:text="#{label.diary.transaction_volume}">체결 수량</label>
+                <input type="text" id="transaction_volume" th:field="*{content[__${itemStat.index}__].transaction_volume}"
+                       class="form-control" placeholder="체결 수량을 입력하세요">
+            </div>
+
+            <hr class="my-4">
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.save}">저장</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='diaries.html'"
+                        th:onclick="|location.href='@{/diaries/{diaryId}(diaryId=${diary.id})}'|"
+                        type="button" th:text="#{button.cancel}">취소</button>
+            </div>
+        </div>
+
+    </form>
+
+</div> <!-- /container -->
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2 th:text="#{page.diaries}">일지 목록</h2>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='addForm.html'"
+                    th:onclick="|location.href='@{/diaries/create}'|"
+                    type="button" th:text="#{page.addDiary}">일지 등록</button>
+        </div>
+    </div>
+
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th th:text="#{label.diary.id}">ID</th>
+                <th th:text="#{label.diary.created_at}">생성일자</th>
+                <th th:text="#{label.diary.updated_at}">수정일자</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="diary : ${diaries}">
+                <td><a href="diary.html" th:href="@{/diaries/{diaryId}(diaryId=${diary.id})}" th:text="${diary.id}">일지 ID</a></td>
+                <td><a href="diary.html" th:href="@{|/diaries/${diary.id}|}" th:text="${diary.created_at}">생성일자</a></td>
+                <td><a href="diary.html" th:href="@{|/diaries/${diary.id}|}" th:text="${diary.updated_at}">수정일자</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>

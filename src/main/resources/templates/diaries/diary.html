@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2 th:text="#{page.diary}">일지 상세</h2>
+    </div>
+
+    <!-- 추가 -->
+    <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
+    <div th:each="content : ${diary.content}">
+        <div>
+            <label for="item" th:text="#{label.diary.item}">종목명</label>
+            <input type="text" id="item" name="item" class="form-control" th:value="${content.item}" readonly>
+        </div>
+        <div>
+            <label for="bank" th:text="#{label.diary.bank}">증권사</label>
+            <input type="text" id="bank" name="bank" class="form-control" th:value="${content.bank}" readonly>
+
+        </div>
+        <div>
+            <label for="trade_category" th:text="#{label.diary.trade_category}">매매 구분</label>
+            <input type="text" id="trade_category" name="trade_category" class="form-control" th:value="${content.trade_category}" readonly>
+        </div>
+
+        <div>
+            <label for="transaction_price" th:text="#{label.diary.transaction_price}">체결 단가</label>
+            <input type="text" id="transaction_price" name="transaction_price" class="form-control" th:value="${content.transaction_price}" readonly>
+        </div>
+
+        <div>
+            <label for="transaction_volume" th:text="#{label.diary.transaction_volume}">체결 수량</label>
+            <input type="text" id="transaction_volume" name="transaction_volume" class="form-control" th:value="${content.transaction_volume}" readonly>
+        </div>
+        <hr class="my-4">
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='editForm.html'"
+                    th:onclick="|location.href='@{/diaries/{diaryId}/edit(diaryId=${diary.id})}'|"
+                    type="button" th:text="#{page.updateDiary}">일지 수정</button>
+        </div>
+        <div class="col">
+            <form th:action="|@{/diaries/{diaryId}/delete(diaryId=${diary.id})}|" th:object="${diary}" method="post">
+            <button class="w-100 btn btn-danger btn-lg"
+                    type="submit" th:text="#{page.deleteDiary}">일지 삭제</button>
+            </form>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='items.html'"
+                    th:onclick="|location.href='@{/diaries}'|"
+                    type="button" th:text="#{button.cancel}">목록으로</button>
+        </div>
+    </div>
+
+</div> <!-- /container -->
+</body>
+</html>
